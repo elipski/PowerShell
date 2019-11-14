@@ -1,6 +1,19 @@
-﻿$resourceGroupName = "EdVSPResourceGroup"
-$storageAccountName = "edvspresourcegroupdiag"
-$fileShareName = "EdVSPfileshare"
+﻿#   This script sets up an Azure storage shared file into the local VM file system 
+#
+#   PowerShell script from Micorosoft documentaion:
+#   https://docs.microsoft.com/en-us/azure/storage/files/storage-how-to-use-files-windows
+#   https://docs.microsoft.com/en-us/powershell/azure/manage-subscriptions-azureps?view=azps-3.0.0
+
+Test-NetConnection -ComputerName epicorxdxfilearchive.file.core.windows.net -Port 445
+
+$resourceGroupName = "EpicorVAN"                            #"<your-resource-group-name>"
+$storageAccountName = "epicorxdxfilearchive"                #"<your-storage-account-name>"
+$fileShareName = "sharedfiles"                              #"<your-file-share-name>"
+$subscription = "e5838590-1dc5-4a22-9fe7-1445301cd3f2"      #"<your-subscription>"
+
+#Set subscription context
+$context = Get-AzSubscription -SubscriptionId $subscription 
+Set-AzContext $context
 
 # These commands require you to be logged into your Azure account, run Login-AzAccount if you haven't
 # already logged in.
@@ -14,10 +27,10 @@ if ($fileShare -eq $null) {
     throw [System.Exception]::new("Azure file share not found")
 }
 
-# The value given to the root parameter of the New-PSDrive cmdlet is the host address for the storage account, 
-# <storage-account>.file.core.windows.net for Azure Public Regions. $fileShare.StorageUri.PrimaryUri.Host is 
-# used because non-Public Azure regions, such as sovereign clouds or Azure Stack deployments, will have different 
-# hosts for Azure file shares (and other storage resources).
+# Save the password so the drive will persist on reboot
+Invoke-Expression -Command "cmdkey /add:$([System.Uri]::new($storageAccount.Context.FileEndPoint).Host) /user:AZURE\$($storageAccount.StorageAccountName) /pass:$($storageAccountKeys[0].Value)"
+
+# Mount the drive
 $password = ConvertTo-SecureString -String $storageAccountKeys[0].Value -AsPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential -ArgumentList "AZURE\$($storageAccount.StorageAccountName)", $password
-New-PSDrive -Name Z -PSProvider FileSystem -Root "\\$($fileShare.StorageUri.PrimaryUri.Host)\$($fileShare.Name)" -Credential $credential -Persist
+New-PSDrive -Name Z -PSProvider FileSystem -Root "\\epicorxdxfilearchive.file.core.windows.net\sharedfiles" -Credential $credential -Persist
