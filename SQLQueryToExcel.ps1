@@ -1,1 +1,0 @@
-Invoke-Sqlcmd -InputFile "C:\bulk\Input.sql" -ServerInstance WILLGO -Database CMS -verbose *> "C:\bulk\Output.txt"
