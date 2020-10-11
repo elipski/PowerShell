@@ -1,0 +1,5 @@
+//Easy way to quickly build a webapp in Azure in one command. Creates the resource group, and App Service Plan too. 
+//git clone code into the directory and then then from the same directory run the az web up command. 
+//AFAIK This is bash in Azure CLI only
+
+az webapp up --location eastus --name edQuickWebApp323 -html
