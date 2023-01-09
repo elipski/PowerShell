@@ -1,0 +1,74 @@
+{
+    "Name": "Shipping",
+    "UseCodeValues": false,
+    "Transactions": [
+        {
+            "Status": "New",
+            "DataElements": [
+                {
+                    "Name": "TABPAGE_1.tp_1_dw_1",
+                    "Type": "Form",
+                    "Keys": [],
+                    "Rows": [
+                        {
+                            "Edits": [
+                                {
+                                    "Name": "pick_ticket_no",
+                                    "Value": "1009128" 
+                                },
+                                {
+                                    "Name": "create_invoice",
+                                    "Value": "ON"
+                                },
+                                {
+                                    "NAME": "carrier_id", 
+                                    "VALUE": "Truck #1" 
+                                },
+                                {
+                                    "NAME": "TRACKING_NO",
+                                    "VALUE": "696946"
+                                },
+                                {
+                                    "Name": "instructions",
+                                    "Value": "goodbye 2020"
+                                },
+                                {
+                                    "Name": "print_invoice",
+                                    "Value": "OFF"
+                                },
+                                {
+                                    "NAME": "SHIP_DATE",
+                                    "VALUE": "2020-01-31"
+                                }
+                            ],
+                            "RelativeDateEdits": []
+                        }
+                    ]
+                },
+                {
+                    "Name": "TABPAGE_SERIAL.serial",
+                    "Type": "List",
+                    "Keys": [
+                        "serial_number",
+                        "item_id"
+                    ],
+                    "Rows": [
+                        {
+                            "Edits": [
+                                {
+                                    "Name": "serial_number",
+                                    "Value": "556677"
+                                },
+                                {
+                                    "Name": "item_id",
+                                    "Value": "26P8254"
+                                }
+                            ],
+                            "RelativeDateEdits": []
+                        } 
+                    ]
+                }
+            ]
+        }
+    ]
+}
